@@ -1,0 +1,4 @@
+5 * abc + 10043
+"this is a string"  ~ Inline comment
+'also a string'
+
