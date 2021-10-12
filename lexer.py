@@ -4,10 +4,12 @@ from enum import Enum, auto
 class Tokens(Enum):
     num = auto()
     plus = auto()
+    minus = auto()
     times = auto()
     string = auto()
     iden = auto()
     comment = auto()
+    expr_end = auto()
     EOF = auto()
 
 
@@ -43,26 +45,33 @@ class Lexer:
             # step through characters and identify tokens
             if look_ahead.isspace():
                 pos += 1
+
             elif look_ahead == "+":
                 self.tokens.append(Token(tokenpos, Tokens.plus))
                 pos += 1
+
+            elif look_ahead == "-":
+                self.tokens.append(Token(tokenpos, Tokens.minus))
+                pos += 1
+
             elif look_ahead == "*":
                 self.tokens.append(Token(tokenpos, Tokens.times))
                 pos += 1
+
             elif look_ahead.isdigit():
                 text = ""
                 while pos < input_len and self.input_string[pos].isdigit():
                     text += self.input_string[pos]
                     pos += 1
                 self.tokens.append(Token(tokenpos, Tokens.num, text=text))
-                pos += 1
+
             elif look_ahead.isalpha():
                 text = ""
                 while pos < input_len and self.input_string[pos].isalpha():
                     text += self.input_string[pos]
                     pos += 1
                 self.tokens.append(Token(tokenpos, Tokens.iden, text=text))
-                pos += 1
+
             elif look_ahead == '"':
                 text = '"'
                 pos += 1  # skip the quotation
@@ -75,6 +84,7 @@ class Lexer:
                 text += '"'
                 self.tokens.append(Token(tokenpos, Tokens.string, text=text))
                 pos += 1
+
             elif look_ahead == "'":
                 text = "'"
                 pos += 1  # skip the quotation
@@ -87,6 +97,7 @@ class Lexer:
                 text += "'"
                 self.tokens.append(Token(tokenpos, Tokens.string, text=text))
                 pos += 1
+
             elif look_ahead == "~":
                 text = ""
                 pos += 1
@@ -98,9 +109,19 @@ class Lexer:
                     pos += 1
                 self.tokens.append(Token(tokenpos, Tokens.comment, text=text))
                 pos += 1
+
+            elif look_ahead == ";":
+                self.tokens.append(Token(tokenpos, Tokens.expr_end))
+                pos += 1
+
             else:
                 print(f"Unknown Token at {tokenpos}")
                 pos += 1
 
         self.tokens.append(Token(input_len, Tokens.EOF))
+        #self.display()
         return self.tokens
+
+
+    def print_current(self,pos: int = 0):
+        print(f"{pos}: {self.input_string[pos]}")
