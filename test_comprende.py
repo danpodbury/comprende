@@ -1,6 +1,6 @@
 import unittest
 from comprende import *
-
+from utils import write_to_json, read_json
 
 class TestComprende(unittest.TestCase):
 
