@@ -26,7 +26,7 @@ class TestTokenParser(unittest.TestCase):
 
     def test_addition(self):
         # can you add two numbers
-        test_string = "10 + 5"
+        test_string = "10 + 5;"
         tokens = Lexer(test_string).lex()
         output = TokenParser(tokens).parse()
         expected = {'type': 'Program',
@@ -38,7 +38,7 @@ class TestTokenParser(unittest.TestCase):
 
     def test_multiplication(self):
         # can you multiply two numbers
-        test_string = "2 * 2"
+        test_string = "2 * 2;"
         tokens = Lexer(test_string).lex()
         output = TokenParser(tokens).parse()
         expected = {'type': 'Program',
@@ -55,10 +55,13 @@ class TestTokenParser(unittest.TestCase):
         output = TokenParser(tokens).parse()
         expected = {'type': 'Program',
                     'Body': [{'type': 'ExpressionStatement',
-                              'expression': {'type': 'BinaryExpression', 'operator': '+',
-                                             'left': {'type': 'BinaryExpression', 'operator': '+',
+                              'expression': {'type': 'BinaryExpression',
+                                             'operator': '+',
+                                             'left': {'type': 'BinaryExpression',
+                                                      'operator': '+',
                                                       'left': {'type': 'NumLiteral', 'value': 10.0},
-                                                      'right': {'type': 'BinaryExpression', 'operator': '*',
+                                                      'right': {'type': 'BinaryExpression',
+                                                                'operator': '*',
                                                                 'left': {'type':'NumLiteral', 'value': 2.0},
                                                                 'right': {'type': 'NumLiteral', 'value': 2.0}}},
                                              'right': {'type': 'NumLiteral', 'value': 1.0}}}]}

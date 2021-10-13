@@ -1,0 +1,51 @@
+{
+    "type": "Program",
+    "Body": [
+        {
+            "type": "ExpressionStatement",
+            "expression": {
+                "type": "BinaryExpression",
+                "operator": "+",
+                "left": {
+                    "type": "BinaryExpression",
+                    "operator": "+",
+                    "left": {
+                        "type": "NumLiteral",
+                        "value": 5.0
+                    },
+                    "right": {
+                        "type": "BinaryExpression",
+                        "operator": "*",
+                        "left": {
+                            "type": "BinaryExpression",
+                            "operator": "*",
+                            "left": {
+                                "type": "NumLiteral",
+                                "value": 5.0
+                            },
+                            "right": {
+                                "type": "NumLiteral",
+                                "value": 10.0
+                            }
+                        },
+                        "right": {
+                            "type": "NumLiteral",
+                            "value": 2.0
+                        }
+                    }
+                },
+                "right": {
+                    "type": "NumLiteral",
+                    "value": 15.0
+                }
+            }
+        },
+        {
+            "type": "ExpressionStatement",
+            "expression": {
+                "type": "NumLiteral",
+                "value": 10.0
+            }
+        }
+    ]
+}

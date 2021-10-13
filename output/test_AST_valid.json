@@ -1,0 +1,12 @@
+{
+    "type": "Program",
+    "Body": [
+        {
+            "type": "ExpressionStatement",
+            "expression": {
+                "type": "NumLiteral",
+                "value": 5.0
+            }
+        }
+    ]
+}

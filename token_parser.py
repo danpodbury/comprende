@@ -2,6 +2,14 @@
 
 from __future__ import annotations
 from lexer import Token, Tokens
+from enum import Enum
+
+class NodeType(str, Enum):
+    Program = 'Program'
+    ExpressionStatement = "ExpressionStatement"
+    BinaryExpression = "BinaryExpression"
+    NumLiteral = "NumLiteral"
+    StringLiteral = "StringLiteral"
 
 
 class TokenParser:
@@ -28,7 +36,7 @@ class TokenParser:
 
     def Program(self):
         # Program : StatementList
-        return {"type": "Program",
+        return {"type": NodeType.Program,
                 "Body": self.StatementList()}
 
     def StatementList(self):
@@ -48,7 +56,7 @@ class TokenParser:
         # ExpressionStatement : Expression ';'
         expression = self.Expression()
         self._eat(Tokens.expr_end)
-        return {"type": "ExpressionStatement",
+        return {"type": NodeType.ExpressionStatement,
                 "expression": expression
         }
 
@@ -63,7 +71,7 @@ class TokenParser:
             operator = self.Operator(self._eat(self.tokens[0].t_type).t_type)
             right = self.MultiplicativeExpression()
 
-            left = {"type": "BinaryExpression",
+            left = {"type": NodeType.BinaryExpression,
                     "operator": operator,
                     "left": left,
                     "right": right}
@@ -77,7 +85,7 @@ class TokenParser:
             operator = self.Operator( self._eat(Tokens.times).t_type )
             right = self.PrimaryExpression()
 
-            left = {"type": "BinaryExpression",
+            left = {"type": NodeType.BinaryExpression,
                     "operator": operator,
                     "left": left,
                     "right": right}
@@ -106,11 +114,11 @@ class TokenParser:
     def NumLiteral(self):
         # NumLiteral : Number
         token = self._eat(Tokens.num)
-        return {"type": "NumLiteral",
+        return {"type": NodeType.NumLiteral,
                 "value": float(token.text)}
 
     def StringLiteral(self):
         # StringLiteral : String
         token = self._eat(Tokens.string)
-        return {"type": "StringLiteral",
+        return {"type": NodeType.StringLiteral,
                 "value": token.text[slice(1, -1)]}
