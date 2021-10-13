@@ -19,6 +19,8 @@ class Interpreter:
         if n['type'] == "BinaryExpression":
             if n['operator'] == '+':            return self.interp(n['left']) + self.interp(n['right'])
             if n['operator'] == '*':            return self.interp(n['left']) * self.interp(n['right'])
+            if n['operator'] == '-':            return self.interp(n['left']) - self.interp(n['right'])
+            if n['operator'] == '/':            return self.interp(n['left']) / self.interp(n['right'])
 
         if n['type'] == 'NumLiteral':           return n['value']
         if n['type'] == 'StringLiteral':        return n['value']

@@ -81,8 +81,8 @@ class TokenParser:
     def MultiplicativeExpression(self):
         # MultiplicativeExpression : PrimaryExpression | MultiplicativeExpression * PrimaryExpression
         left = self.PrimaryExpression()
-        while self.tokens[0].t_type == Tokens.times:
-            operator = self.Operator( self._eat(Tokens.times).t_type )
+        while self.tokens[0].t_type == Tokens.times or self.tokens[0].t_type == Tokens.div:
+            operator = self.Operator(self._eat(self.tokens[0].t_type).t_type)
             right = self.PrimaryExpression()
 
             left = {"type": NodeType.BinaryExpression,
@@ -110,6 +110,7 @@ class TokenParser:
         if type == Tokens.plus: return "+"
         if type == Tokens.minus: return "-"
         if type == Tokens.times: return "*"
+        if type == Tokens.div: return "/"
 
     def NumLiteral(self):
         # NumLiteral : Number

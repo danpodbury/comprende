@@ -6,6 +6,7 @@ class Tokens(Enum):
     plus = auto()
     minus = auto()
     times = auto()
+    div = auto()
     string = auto()
     iden = auto()
     comment = auto()
@@ -56,6 +57,10 @@ class Lexer:
 
             elif look_ahead == "*":
                 self.tokens.append(Token(tokenpos, Tokens.times))
+                pos += 1
+
+            elif look_ahead == "/":
+                self.tokens.append(Token(tokenpos, Tokens.div))
                 pos += 1
 
             elif look_ahead.isdigit():
